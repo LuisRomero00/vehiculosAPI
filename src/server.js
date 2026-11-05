@@ -1,5 +1,6 @@
 require("dotenv").config();
 const helloRoutes = require("./routes/hello.routes");
+const autosRoutes = require("./routes/autos.routes");
 const errorHandler = require("./middlewares/error.middleware");
 const express = require("express");
 const pool = require("./config/database")
@@ -7,11 +8,14 @@ const pool = require("./config/database")
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(express.json())
+
 app.get("/", (req, res) => {
   res.send("API funcionando correctamente");
 });
 
 app.use("/api", helloRoutes)
+app.use("/api/autos", autosRoutes);
 
 app.use(errorHandler) //Debe ir despues de registrar las rutas y antes de app.listen()
 
