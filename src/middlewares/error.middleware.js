@@ -6,6 +6,12 @@ const errorHandler = (err, req, res, next) => {
       mesage: "Ya se registro algo con esos datos"
     })
   }
+  
+  if (err.code === "ER_ROW_IS_REFERENCED_2") {
+    return res.status(409).json({
+      message: "No se puede eliminar este auto porque tiene registros asociados"
+    });
+  }
 
   res.status(err.status || 500).json({
     message:err.status
